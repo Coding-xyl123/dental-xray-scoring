@@ -1,0 +1,21 @@
+opencv-python
+numpy
+pandas
+Pillow
+matplotlib
+seaborn
+streamlit
+
+# Optional utilities (safe to include; widely used)
+scikit-learn
+
+# | Package           | Purpose                                                  |
+# | ----------------- | -------------------------------------------------------- |
+# | **opencv-python** | Manual clicking UI, image transforms                     |
+# | **numpy**         | Array operations, symmetry scoring                       |
+# | **pandas**        | Handling scores.csv & truth.xlsx                         |
+# | **Pillow**        | Reading EXIF DPI metadata                                |
+# | **matplotlib**    | Histograms & plots in Streamlit                          |
+# | **seaborn**       | Confusion-matrix heatmaps                                |
+# | **streamlit**     | Case viewer + analytics app                              |
+# | **scikit-learn**  | Optional future ML (confusion matrix, classifiers, etc.) |
