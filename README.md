@@ -1,3 +1,15 @@
+Official Artifact: Overlay PNG
+
+Artifact type: image/png
+
+Purpose: Explainable visualization of measurement points/lines used to compute scores
+
+Storage rule: Must be written only via ObjectStore.put() (no direct file writes)
+
+Key format (proposed): xray/overlays/case_id=<CASE_ID>/overlay.png
+
+Versioning: Every run produces a new immutable version
+
 1. Project Goal
 
 Dentists and orthodontists evaluate panoramic X-rays using rubrics such as:
@@ -217,15 +229,15 @@ BigQuery → Looker Studio
 🗂️ 7. Repository Structure
 dental-xray-scoring/
 │
-├── click_and_score.py
+├── click*and_score.py
 ├── streamlit_app.py
 ├── export_training_data.py
 │
 ├── data/
-│ └── images/_.jpg
+│ └── images/*.jpg
 │
 ├── results/
-│ ├── overlays/_.png
+│ ├── overlays/\_.png
 │ └── scores.csv
 │
 ├── README.md

@@ -1,0 +1,42 @@
+{
+  "schema_version": "1.0",
+  "case_id": "110",
+  "run_id": "8a12b3b4",
+  "created_at": "2025-12-20T04:03:37.700741Z",
+  "landmarks": [
+    {
+      "name": "upper_mid",
+      "x": 613,
+      "y": 323
+    },
+    {
+      "name": "lower_mid",
+      "x": 608,
+      "y": 400
+    },
+    {
+      "name": "bone_left",
+      "x": 214,
+      "y": 290
+    },
+    {
+      "name": "bone_right",
+      "x": 1016,
+      "y": 306
+    }
+  ],
+  "measurements": [
+    {
+      "name": "px_per_cm",
+      "value": 47.15384615384615
+    }
+  ],
+  "scores": {
+    "col2_bone_balance": 3,
+    "col3_upper_mid_center": 2,
+    "col4_upper_lower_alignment": 4
+  },
+  "warnings": [
+    "Scale is approximate (JPEG/PNG without DICOM calibration)."
+  ]
+}

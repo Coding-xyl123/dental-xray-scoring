@@ -1,0 +1,56 @@
+{
+  "schema_version": "1.1",
+  "case_id": "1",
+  "run_id": "311fcad2",
+  "created_at": "2025-12-22T23:50:47.599089Z",
+  "landmarks": [
+    {
+      "name": "upper_mid",
+      "x": 576,
+      "y": 330
+    },
+    {
+      "name": "lower_mid",
+      "x": 577,
+      "y": 417
+    },
+    {
+      "name": "bone_left",
+      "x": 101,
+      "y": 220
+    },
+    {
+      "name": "bone_right",
+      "x": 996,
+      "y": 219
+    }
+  ],
+  "measurements": [
+    {
+      "name": "px_per_cm",
+      "value": 42.96153846153846
+    }
+  ],
+  "scores": {
+    "col2_bone_balance": 5,
+    "col3_upper_mid_center": 3,
+    "col4_upper_lower_alignment": 3
+  },
+  "warnings": [
+    "Scale is approximate (JPEG/PNG without DICOM calibration)."
+  ],
+  "pipeline": {
+    "name": "dental-xray-scoring",
+    "algorithm_version": "heuristic-v1"
+  },
+  "input": {
+    "path": "1.jpg",
+    "width_px": 1117,
+    "height_px": 584
+  },
+  "scale": {
+    "px_per_cm": 42.96153846153846,
+    "method": "unknown_yet",
+    "confidence": "low"
+  }
+}

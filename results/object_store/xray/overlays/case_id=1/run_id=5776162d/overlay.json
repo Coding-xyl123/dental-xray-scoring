@@ -1,0 +1,59 @@
+{
+  "schema_version": "1.1",
+  "case_id": "1",
+  "run_id": "5776162d",
+  "created_at": "2025-12-23T00:42:28.915778Z",
+  "landmarks": [
+    {
+      "name": "upper_mid",
+      "x": 578,
+      "y": 342
+    },
+    {
+      "name": "lower_mid",
+      "x": 578,
+      "y": 410
+    },
+    {
+      "name": "bone_left",
+      "x": 89,
+      "y": 214
+    },
+    {
+      "name": "bone_right",
+      "x": 1001,
+      "y": 227
+    }
+  ],
+  "measurements": [],
+  "scores": {
+    "col2_bone_balance": 5,
+    "col3_upper_mid_center": 3,
+    "col4_upper_lower_alignment": 3
+  },
+  "warnings": [
+    "Scale is approximate (no trusted DPI; assumed pano width)."
+  ],
+  "pipeline": {
+    "name": "dental-xray-scoring",
+    "algorithm_version": "heuristic-v1"
+  },
+  "input": {
+    "path": "1.jpg",
+    "width_px": 1117,
+    "height_px": 584
+  },
+  "scale": {
+    "px_per_cm": 42.96153846153846,
+    "method": "assumed_sensor_width_cm",
+    "confidence": "low",
+    "assumed_width_cm": 26.0,
+    "min_trusted_dpi": 150.0,
+    "dpi_used": null
+  },
+  "provenance": {
+    "git_commit": "a5f4f4a4d763bdb51b13d551322ce90130c240af",
+    "python_version": "3.12.12",
+    "platform": "macOS-15.6.1-arm64-arm-64bit"
+  }
+}
