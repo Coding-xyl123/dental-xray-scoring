@@ -1,255 +1,327 @@
-Official Artifact: Overlay PNG
+Dental Panoramic X-ray Scoring System
 
-Artifact type: image/png
+A semi-automatic, reproducible scoring system for dental panoramic X-rays that standardizes human annotations, produces explainable visual artifacts, and supports downstream research, analytics, and ML development.
 
-Purpose: Explainable visualization of measurement points/lines used to compute scores
+1. Project Motivation
 
-Storage rule: Must be written only via ObjectStore.put() (no direct file writes)
+Dentists and orthodontists often evaluate panoramic X-rays using rubrics such as:
 
-Key format (proposed): xray/overlays/case_id=<CASE_ID>/overlay.png
+C2 – Bone balance (left/right symmetry)
 
-Versioning: Every run produces a new immutable version
+C3 – Upper midline centering
 
-1. Project Goal
+C4 – Upper–lower midline alignment
 
-Dentists and orthodontists evaluate panoramic X-rays using rubrics such as:
-
-Bone balance (left/right symmetry)
-
-Upper midline centering
-
-Upper–lower midline alignment
-
-But:
+However, in practice:
 
 Clinical scoring is subjective
 
-Measurements lack consistency
+Manual measurements are inconsistent
 
-Most datasets have no physical calibration
+Most datasets lack physical calibration
 
-ML training requires many labeled cases
+ML training requires clean, explainable labels
 
-This project builds a semi-automatic, reproducible scoring system that supports:
+This project builds a human-in-the-loop scoring pipeline that is:
 
-🎯 Research
+Reproducible
 
-Standardizes annotations for datasets.
+Explainable
 
-🎯 ML Development
+Versioned
 
-Exports clean labels for training a future auto-detection model.
+Ready for analysis and ML
 
-🎯 Clinical QA
+2. Project Goals
+   Research
 
-Provides consistent C2–C3–C4 scoring with visual overlays.
-+---------------------------+
-| data/images/_.jpg |
-| (raw panoramic images) |
-+-------------+-------------+
-|
-v
-Manual click scoring (OpenCV) + heuristic midline guidance
-|
-Outputs: col2, col3, col4 + overlay.png
-|
-v
-+-----------------------------------------------+
-| results/scores.csv |
-| results/overlays/_.png |
-+----------------+------------------------------+
-|
-v
-+------------------------------------------------+
-| Streamlit Dashboard |
-| - Case viewer |
-| - Score distributions |
-| - Confusion matrices (vs ground truth) |
-| - Accuracy summary |
-+------------------------------------------------+
-|
-v
-(Optional) ML model training 3. Features
-🔹 Manual Scoring with Intelligent Hints
+Standardize annotations across datasets
 
-Click in order:
+Quantify human annotation variability
 
-Upper midline
+ML Development
 
-Lower midline
+Export clean landmark + score labels
 
-Bone left (image left → patient right)
+Prepare for future auto-detection models
 
-Bone right
+Clinical QA
 
-Real-time suggested midlines & bone endpoints
+Provide consistent C2 / C3 / C4 scoring
 
-Automatically generates:
+Preserve visual evidence of every score
 
-overlay.png
+3. Official Artifact (Core Design Choice)
+   Official Artifact: Overlay PNG
 
-scores.csv row
+Type: image/png
 
-Training record (JSON or future TFRecord)
-Streamlit Case Viewer
+Purpose: Explainable visualization of all measurement points and lines used to compute scores
 
-Displays:
+Rule: Must be written only via ObjectStore.put\_\*()
+(no direct file writes)
 
-Original panoramic image
+Immutability: Every run produces a new version
 
-Scored overlay image
+Storage key format:
 
-C2/C3/C4 metrics
+xray/overlays/case_id=<CASE_ID>/run_id=<RUN_ID>/overlay.png
 
-Useful for oral radiology research and datasets.
+Associated metadata is written as:
 
-🔹 Analytics Dashboard
+xray/overlays/case_id=<CASE_ID>/run_id=<RUN_ID>/overlay.json
 
-Includes:
+There is no “overwrite”.
+The latest overlay is determined by querying, not mutation.
 
-Score histograms
+This mirrors real object storage systems (e.g. S3).
 
-Confusion matrices from Excel ground truth
+4. End-to-End Pipeline Overview
+   Raw panoramic image (.jpg)
+   ↓
+   Human annotation (4 clicks)
 
-Per-column accuracy
+- heuristic visual hints
+  ↓
+  scoring_core.py (pure function)
+  ↓
+  Scores + confidence
+  ↓
+  ObjectStore (immutable artifacts)
 
-Dataset summary
+* overlay.png
+* overlay.json
+  ↓
+  results/scores.csv (index table)
+  ↓
+  Analysis scripts
+* noise sensitivity
+* annotation audit
+  ↓
+  Streamlit dashboard
 
-🔹 Ground-Truth Excel Integration
+5. Manual Scoring with Intelligent Hints
+   Click order (enforced):
 
-Place:
+Upper teeth midline
 
-scoring 1-200.xlsx
+Lower teeth midline
 
-In the project root.
-Streamlit will auto-parse:
+Bone LEFT end (image left → patient right)
 
-Image ID
+Bone RIGHT end (image right → patient left)
 
-True C2
+Visual hints (guidance only):
 
-True C3
+Blue vertical line – suggested upper midline (symmetry)
 
-True C4
+Purple vertical line – suggested lower midline
 
-…and merge with scores.csv.
+Red circle – suggested left bone endpoint
 
-🔹 Ready for ML Training
+Green circle – suggested right bone endpoint
 
-Click outputs (x, y) + scores are structured for:
+Hints are not used directly for scoring — only your clicks are.
 
-Landmark prediction models
+Each run produces:
 
-Regression/Classification
+overlay.png (official artifact)
 
-Ensemble scoring models
+overlay.json (structured record)
 
-🧮 4. Scoring Logic
-C2 – Bone Balance
+One row in results/scores.csv
+
+6. Scoring Logic (C2 / C3 / C4)
+   C2 – Bone Balance
 
 Compares patient-space distances:
 
 Patient left = distance(upper_mid, bone_right)
+
 Patient right = distance(upper_mid, bone_left)
 
-Perfect symmetry → Score 3
+Symmetry → score 3
+
 Left longer → 1–2
+
 Right longer → 4–5
 
-C3 – Upper Midline vs Image Center
+C3 – Upper Midline Centering
 
-Evaluates deviation from image center (in cm).
+Measures deviation from image center (cm)
 
-Uses pixel-to-cm estimation via:
+Pixel-to-cm scale via:
 
-EXIF DPI (if trustworthy)
+Trusted EXIF DPI (if available)
 
-Otherwise: assumed pano sensor width (26 cm)
+Otherwise assumed pano width (26 cm)
 
 C4 – Upper vs Lower Midline Alignment
 
-Measures horizontal offset:
+Horizontal offset between upper and lower midlines
 
 Aligned → 3
-Left offset → 4–5
-Right offset → 1–2
 
-📊 5. Analytics (Streamlit)
+Offset left / right → 1–2 or 4–5
 
-Features include:
+7. Annotation Confidence
 
-Histograms of C2/C3/C4
+Each annotation run is assigned a confidence level:
 
-Confusion matrices (prediction vs truth)
+High – close to heuristic hints
 
-Accuracy summary
+Medium – small deviation
 
-Auto-sorted case selector (1.jpg … 200.jpg)
-☁️ 6. Cloud Architecture Sketch (AWS)
-+----------------------+
-| Browser |
-| Streamlit Frontend |
-+-----------+----------+
-|
-v
-+-----------------------------+
-| EC2 / Lightsail / Fargate |
-| Host Streamlit Web App |
-+-----------------------------+
-|
-v
-+-------------------+
-| AWS Lambda |
-| - scoring backend |
-| - auto-detection |
-+-------------------+
-|
-v
-+-------------------+
-| S3 Bucket |
-| - images |
-| - overlays |
-| - scores |
-+-------------------+
-|
-v
-+-----------------------------+
-| Athena SQL + QuickSight BI |
-+-----------------------------+
-GCP Equivalent:
+Low – large deviation (>5px)
 
-Cloud Run (Streamlit)
+This is critical because human variability often dominates algorithmic noise.
 
-Cloud Functions
+8. Annotation Quality Audit
 
-GCS
+We analyze all human annotations by measuring deviation from heuristic symmetry hints.
 
-BigQuery → Looker Studio
+Key findings:
 
-🗂️ 7. Repository Structure
-dental-xray-scoring/
-│
-├── click*and_score.py
-├── streamlit_app.py
-├── export_training_data.py
-│
-├── data/
-│ └── images/*.jpg
-│
-├── results/
-│ ├── overlays/\_.png
-│ └── scores.csv
-│
-├── README.md
-└── requirements.txt
+Annotation error is multi-modal, not Gaussian
 
-⚙️ 8. Installation
-pip install -r requirements.txt
+Deviations up to ~100px observed
 
-Run the scoring tool:
+Lower midline annotations are less stable than upper midline
 
-python click_and_score.py
+Human variability dominates algorithmic noise below ≈5px
 
-Run Streamlit:
+This directly motivated:
 
-streamlit run streamlit_app.py
+Confidence scoring
+
+Noise sensitivity evaluation
+
+Conservative interpretation of C3 / C4
+
+9. Noise Sensitivity Analysis
+
+We evaluate how small perturbations (±1px, ±2px, ±5px) in landmarks affect scores.
+
+This answers:
+
+“How stable are the scores relative to annotation noise?”
+
+Results show:
+
+Scores are stable under very small noise
+
+Instability grows rapidly beyond a few pixels
+
+Reinforces the importance of annotation confidence
+
+10. Streamlit Dashboard
+
+The Streamlit app provides:
+
+Case viewer (original image + overlay)
+
+C2 / C3 / C4 distributions
+
+Confusion matrices (vs ground truth)
+
+Dataset-level summaries
+
+11. Resume / Restart Support
+
+When starting the tool:
+
+The program detects existing progress in scores.csv
+
+You can choose:
+
+Resume (skip already-scored images)
+
+Start over (CSV is backed up, then re-run)
+
+Quit
+
+This enables long annotation sessions without data loss.
+
+12. Repository Structure
+    dental-xray-scoring/
+    │
+    ├── src/
+    │ ├── click_and_score.py
+    │ ├── scoring_core.py
+    │ ├── analyze_annotations.py
+    │ ├── noise_sensitivity.py
+    │ └── streamlit_app.py
+    │
+    ├── data/
+    │ └── images/\*.jpg
+    │
+    ├── results/
+    │ ├── scores.csv
+    │ └── object_store/
+    │ └── xray/overlays/...
+    │
+    ├── README.md
+    └── requirements.txt
+
+13. Installation
+    pip install -r requirements.txt
+
+14. Usage
+    Manual scoring
+    python src/click_and_score.py
+
+Annotation audit
+python src/analyze_annotations.py
+
+Noise sensitivity
+python src/noise_sensitivity.py
+
+Streamlit dashboard
+streamlit run src/streamlit_app.py
+
+15. Future Work
+
+Auto-detection of landmarks (ML)
+
+Inter-annotator agreement analysis
+
+Cloud deployment (S3 + Athena / BigQuery)
+
+Active learning loop for annotation efficiency
+
+16. Key Takeaway
+
+This project is not just a tool, but a measurement system:
+
+Human-centered
+
+Explainable
+
+Versioned
+
+Analysis-driven
+
+It bridges clinical reasoning, software engineering, and ML readiness.
+
+Summary (1-minute)
+
+This project demonstrates:
+
+- Human-in-the-loop system design
+- Immutable artifact storage (S3-style)
+- Noise sensitivity analysis
+- Annotation quality auditing
+- Explainable outputs for clinical QA
+
+## Cloud Mapping (AWS / GCP)
+
+This system is designed to be cloud-ready:
+
+- ObjectStore → S3 / GCS (versioned objects)
+- click_and_score.py → Lambda / Cloud Function (stateless)
+- scores.csv → Athena / BigQuery external table
+- overlay PNGs → S3 object browser for QA
+- annotation audit → scheduled batch job
+- Streamlit → Cloud Run / EC2 / App Runner
+
+No core logic changes are required to move to the cloud.

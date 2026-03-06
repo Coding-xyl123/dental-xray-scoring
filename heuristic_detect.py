@@ -6,7 +6,7 @@ def heuristic_detect_points(img):
     Lightweight heuristic detector for:
       - upper midline
       - lower midline
-      - left bone end
+      - left bone en
       - right bone end
 
     Returns dict with keys:

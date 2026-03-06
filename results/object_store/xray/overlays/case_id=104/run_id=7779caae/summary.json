@@ -1,0 +1,44 @@
+{
+  "schema_version": "1.0",
+  "case_id": "104",
+  "run_id": "7779caae",
+  "created_at": "2026-03-06T07:06:34.975371+00:00",
+  "img_width_px": 1228,
+  "img_height_px": 593,
+  "px_per_cm": 40.93333333333333,
+  "scale_method": "assumed_sensor_width_cm",
+  "scale_confidence": "low",
+  "annotation_confidence": "medium",
+  "warnings": [
+    "Scale is approximate (no trusted DPI; assumed pano width)."
+  ],
+  "scores": {
+    "col2_bone_balance": 4,
+    "col3_upper_mid_center": 2,
+    "col4_upper_lower_alignment": 3
+  },
+  "landmarks": {
+    "upper_mid": {
+      "x": 617,
+      "y": 296
+    },
+    "lower_mid": {
+      "x": 616,
+      "y": 375
+    },
+    "bone_left": {
+      "x": 140,
+      "y": 227
+    },
+    "bone_right": {
+      "x": 1077,
+      "y": 211
+    }
+  },
+  "artifacts": {
+    "input_image_key": "xray/overlays/case_id=104/run_id=7779caae/input/104.jpg",
+    "overlay_png_key": "xray/overlays/case_id=104/run_id=7779caae/overlay.png",
+    "overlay_json_key": "xray/overlays/case_id=104/run_id=7779caae/overlay.json",
+    "summary_json_key": "xray/overlays/case_id=104/run_id=7779caae/summary.json"
+  }
+}

@@ -1,0 +1,8 @@
+{
+  "name": "Run click_and_score (module)",
+  "type": "python",
+  "request": "launch",
+  "module": "src.click_and_score",
+  "cwd": "${workspaceFolder}",
+  "console": "integratedTerminal"
+}

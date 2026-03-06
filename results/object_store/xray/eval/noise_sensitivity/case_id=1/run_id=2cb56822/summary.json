@@ -1,0 +1,45 @@
+{
+  "schema_version": "1.0",
+  "case_id": "1",
+  "run_id": "2cb56822",
+  "created_at": "2026-01-13T06:52:12.607735+00:00",
+  "source_overlay_json": "/Users/xiangyangliu/dental-xray-scoring/results/object_store/xray/overlays/case_id=1/run_id=4080c1fd/overlay.json",
+  "img_width_px": 1117,
+  "px_per_cm": 42.96153846153846,
+  "deltas_px": [
+    0,
+    1,
+    2,
+    5
+  ],
+  "flip_summary": [
+    {
+      "delta_px": 0,
+      "trials": 200,
+      "flips": 0,
+      "flip_rate": 0.0
+    },
+    {
+      "delta_px": 1,
+      "trials": 200,
+      "flips": 63,
+      "flip_rate": 0.315
+    },
+    {
+      "delta_px": 2,
+      "trials": 200,
+      "flips": 96,
+      "flip_rate": 0.48
+    },
+    {
+      "delta_px": 5,
+      "trials": 200,
+      "flips": 86,
+      "flip_rate": 0.43
+    }
+  ],
+  "artifacts": {
+    "noise_sensitivity_csv_key": "xray/eval/noise_sensitivity/case_id=1/run_id=2cb56822/noise_sensitivity.csv",
+    "summary_json_key": "xray/eval/noise_sensitivity/case_id=1/run_id=2cb56822/summary.json"
+  }
+}

@@ -1,0 +1,23 @@
+{
+  "schema_version": "1.0",
+  "run_id": "4cec7660",
+  "created_at": "2026-03-01T08:44:40.936974Z",
+  "status": "SUCCESS",
+  "code_version": "d9fc236020009fa1a53669f322b647fc6545a411",
+  "inputs": {
+    "image_path": "input/101.jpg",
+    "image_sha256": "1a1894f35b8632eaa515319bf0873184eaae2389811a580c43dc3802144f6880",
+    "config_sha256": "817954b9695b8ed405d288e084ca1eefa074d4df67e6865c9e758f4e2eb1d66e",
+    "config_canonical_json": "{\"algorithm_version\":\"heuristic-v1\",\"default_image_width_cm\":30.0,\"min_trusted_dpi\":150}"
+  },
+  "artifacts": {
+    "overlay_png": {
+      "path": "overlay.png",
+      "sha256": "812275356fbb0a67fa4e3d25888ad3fc77e9634bf3bf2b6e29a034260a2d8fcf"
+    },
+    "overlay_json": {
+      "path": "overlay.json",
+      "sha256": "27de2549dc769c9637e6003122578f60d1a2adf3eb9e28ab6f0a882a6583d51c"
+    }
+  }
+}

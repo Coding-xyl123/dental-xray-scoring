@@ -1,0 +1,2 @@
+image_name,col2,col3,col4,run_id,annotation_confidence,overlay_png_key,overlay_json_key
+1.jpg,2,1,3,226017bf,low,xray/overlays/case_id=1/run_id=226017bf/overlay.png,xray/overlays/case_id=1/run_id=226017bf/overlay.json

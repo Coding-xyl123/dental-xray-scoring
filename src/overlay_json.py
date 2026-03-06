@@ -1,18 +1,23 @@
 # src/overlay_json.py
 from __future__ import annotations
 
-from datetime import datetime
-from typing import Any, Dict, Optional
+from datetime import datetime, timezone
+from typing import Any, Dict, List, Optional
+
+
+def _utc_now_iso() -> str:
+    # ISO-8601, always UTC, always ends with Z
+    return datetime.now(timezone.utc).isoformat().replace("+00:00", "Z")
 
 
 def build_overlay_record(
     *,
     case_id: str,
     run_id: str,
-    landmarks: list,
-    measurements: list,
-    scores: dict,
-    warnings: list,
+    landmarks: List[Dict[str, Any]],
+    measurements: Optional[List[Dict[str, Any]]] = None,
+    scores: Dict[str, Any],
+    warnings: Optional[List[str]] = None,
     input_meta: Optional[Dict[str, Any]] = None,
     scale_meta: Optional[Dict[str, Any]] = None,
     pipeline: Optional[Dict[str, Any]] = None,
@@ -21,36 +26,51 @@ def build_overlay_record(
     """
     Build a machine-verifiable overlay record.
 
-    This function is PURE:
+    PURE:
       - no file IO
       - no environment access
       - deterministic given inputs
-
-    Storage is handled elsewhere (ObjectStore).
     """
+
+    # Normalize lists
+    measurements = list(measurements or [])
+    warnings = list(warnings or [])
+
+    # Normalize landmarks (x/y should be ints)
+    norm_landmarks: List[Dict[str, Any]] = []
+    for lm in landmarks:
+        lm2 = dict(lm)
+        if "x" in lm2:
+            lm2["x"] = int(lm2["x"])
+        if "y" in lm2:
+            lm2["y"] = int(lm2["y"])
+        norm_landmarks.append(lm2)
+
+    # Normalize scores (values should be ints)
+    norm_scores: Dict[str, int] = {str(k): int(v) for k, v in scores.items()}
 
     record: Dict[str, Any] = {
         "schema_version": "1.1",
-        "case_id": case_id,
-        "run_id": run_id,
-        "created_at": datetime.utcnow().isoformat() + "Z",
-        "landmarks": landmarks,
+        "case_id": str(case_id),
+        "run_id": str(run_id),
+        "created_at": _utc_now_iso(),
+        "landmarks": norm_landmarks,
         "measurements": measurements,
-        "scores": scores,
+        "scores": norm_scores,
         "warnings": warnings,
     }
 
     # Optional blocks (backwards-compatible)
     if pipeline is not None:
-        record["pipeline"] = pipeline
+        record["pipeline"] = dict(pipeline)
 
     if input_meta is not None:
-        record["input"] = input_meta
+        record["input"] = dict(input_meta)
 
     if scale_meta is not None:
-        record["scale"] = scale_meta
+        record["scale"] = dict(scale_meta)
 
     if provenance is not None:
-        record["provenance"] = provenance
+        record["provenance"] = dict(provenance)
 
     return record
