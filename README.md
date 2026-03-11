@@ -108,13 +108,18 @@ The system is designed to map directly to cloud infrastructure:
 - Noise-sensitivity analysis for measurement stability
 - Cloud-ready architecture
 
-## Pipeline Architecture
+## System Architecture
 
-![System Architecture](docs/architecture.png)
+![Architecture](docs/architecture.png)
 
-The pipeline processes panoramic dental X-ray images through a
-human-in-the-loop annotation workflow, generates reproducible scoring
-artifacts, and stores them in an immutable object-store layout.
+The pipeline follows a reproducible artifact-based workflow:
+
+1. A panoramic dental X-ray image is annotated using the interactive
+   click interface.
+2. The scoring engine computes geometric measurements.
+3. Results are written to an immutable artifact store.
+4. Each run is verified using SHA256 integrity checks.
+5. Outputs can be analyzed through the Streamlit dashboard.
 
 ## Repository Structure
 
