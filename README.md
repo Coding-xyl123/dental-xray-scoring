@@ -1,18 +1,17 @@
+This repository demonstrates how human annotation pipelines can be implemented with reproducibility guarantees and artifact integrity checks,similar to production data pipelines used in cloud infrastructure systems.
+
 # Dental Panoramic X-ray Scoring Pipeline
 
 A reproducible, human-in-the-loop system for scoring dental panoramic X-rays.
 
-The system generates versioned artifacts, visual overlays, and structured metadata
-to support clinical QA, dataset curation, and machine learning development.
+The system generates versioned artifacts, visual overlays, and structured metadata to support clinical QA, dataset curation, and machine learning
+development.
 
-This project demonstrates correctness-first data pipeline engineering,
-immutable artifact storage, and reproducible execution similar to
-modern object storage systems.
+This project demonstrates correctness-first data pipeline engineering,immutable artifact storage, and reproducible execution similar to modern object storage systems.
 
 ## System Overview
 
-The pipeline standardizes human annotations on panoramic dental X-rays and produces
-reproducible scoring artifacts.
+The pipeline standardizes human annotations on panoramic dental X-rays and produces reproducible scoring artifacts.
 
 Key features:
 
@@ -32,13 +31,13 @@ Each scoring run generates:
 - `summary.json` – compact output for analytics
 
 results/object_store/xray/overlays/
-case_id=104/
-run_id=b7419b98/
-input/
-metadata.json
-overlay.json
-overlay.png
-summary.json
+└── case_id=104/
+└── run_id=b7419b98/
+├── input/
+├── metadata.json
+├── overlay.json
+├── overlay.png
+└── summary.json
 
 Each run is immutable. New runs produce new `run_id` directories.
 
@@ -46,6 +45,12 @@ This design mirrors object storage systems,
 enabling reproducibility and auditability.
 
 ## Artifact Integrity
+
+Artifacts are stored using a partitioned object-store layout:
+
+dataset=xray / artifact=overlay / case_id / run_id
+
+This layout enables efficient querying, reproducibility, and auditability.
 
 Each pipeline run produces a `metadata.json` file that records:
 
@@ -81,11 +86,21 @@ The repository includes tools for evaluating annotation quality:
 - Noise sensitivity evaluation (`noise_sensitivity.py`)
 - Dataset visualization (Streamlit dashboard)
 
+```bash
 pip install -r requirements.txt
+```
+
+```bash
 python -m src.click_and_score
-python -m src.analyze_annotations
-python -m src.noise_sensitivity
+```
+
+```bash
+python -m src.integrity results/object_store/xray/overlays/case_id=XXX/run_id=XXX
+```
+
+```bash
 streamlit run src/streamlit_app.py
+```
 
 ## Cloud Deployment Mapping
 
@@ -107,6 +122,16 @@ The system is designed to map directly to cloud infrastructure:
 - Human-in-the-loop annotation system
 - Noise-sensitivity analysis for measurement stability
 - Cloud-ready architecture
+
+## Design Principles
+
+The system is designed around several engineering principles:
+
+- **Immutability** – Each scoring run produces a new `run_id` directory.
+- **Reproducibility** – All artifacts include configuration and input hashes.
+- **Integrity Verification** – SHA-256 checks ensure outputs are unchanged.
+- **Separation of Concerns** – Annotation, scoring, storage, and analysis are modular components.
+- **Cloud Compatibility** – The artifact store mirrors object storage systems.
 
 ## System Architecture
 
@@ -153,16 +178,37 @@ dental-xray-scoring/
 
 Install dependencies:
 
+```bash
 pip install -r requirements.txt
+```
 
 Run the annotation tool:
 
+```bash
 python -m src.click_and_score
+```
 
 Verify artifact integrity:
 
+```bash
 python -m src.integrity results/object_store/xray/overlays/case_id=XXX/run_id=XXX
+```
 
 Launch the dashboard:
 
+```bash
 streamlit run src/streamlit_app.py
+```
+
+## Dependencies
+
+| Package           | Purpose                                 |
+| ----------------- | --------------------------------------- |
+| **opencv-python** | Manual clicking UI and image transforms |
+| **numpy**         | Array operations and symmetry scoring   |
+| **pandas**        | Handling scoring datasets               |
+| **Pillow**        | Reading image metadata                  |
+| **matplotlib**    | Plotting and visualization              |
+| **seaborn**       | Heatmaps and statistical plots          |
+| **streamlit**     | Interactive analytics dashboard         |
+| **scikit-learn**  | Optional ML utilities                   |
