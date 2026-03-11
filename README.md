@@ -5,8 +5,9 @@ A reproducible, human-in-the-loop system for scoring dental panoramic X-rays.
 The system generates versioned artifacts, visual overlays, and structured metadata
 to support clinical QA, dataset curation, and machine learning development.
 
-This project demonstrates correctness-first engineering, immutable artifact
-storage, and reproducible data pipelines similar to modern object storage systems.
+This project demonstrates correctness-first data pipeline engineering,
+immutable artifact storage, and reproducible execution similar to
+modern object storage systems.
 
 ## System Overview
 
@@ -43,26 +44,6 @@ Each run is immutable. New runs produce new `run_id` directories.
 
 This design mirrors object storage systems,
 enabling reproducibility and auditability.
-
-## Pipeline Architecture
-
-Raw panoramic image (.jpg)
-↓
-Human annotation (4 landmarks)
-↓
-Scoring engine (`scoring_core.py`)
-↓
-Artifact generation
-
-- overlay.png
-- overlay.json
-- metadata.json
-  ↓
-  Immutable object store
-  ↓
-  Dataset index (`results/scores.csv`)
-  ↓
-  Analysis + visualization
 
 ## Artifact Integrity
 
@@ -127,12 +108,56 @@ The system is designed to map directly to cloud infrastructure:
 - Noise-sensitivity analysis for measurement stability
 - Cloud-ready architecture
 
-Image
-↓
-Annotation Tool
-↓
-Scoring Engine
-↓
-Artifact Store
-↓
-Analysis / Dashboard
+## Pipeline Architecture
+
+![System Architecture](docs/architecture.png)
+
+The pipeline processes panoramic dental X-ray images through a
+human-in-the-loop annotation workflow, generates reproducible scoring
+artifacts, and stores them in an immutable object-store layout.
+
+## Repository Structure
+
+```text
+dental-xray-scoring/
+│
+├── src/
+│   ├── click_and_score.py
+│   ├── scoring_core.py
+│   ├── object_store.py
+│   ├── overlay_json.py
+│   ├── integrity.py
+│   ├── analyze_annotations.py
+│   ├── noise_sensitivity.py
+│   └── streamlit_app.py
+│
+├── docs/
+│   └── architecture.png
+│
+├── data/
+│   └── sample inputs
+│
+├── results/
+│   └── object_store/
+│
+├── requirements.txt
+└── README.md
+```
+
+## Quick Start
+
+Install dependencies:
+
+pip install -r requirements.txt
+
+Run the annotation tool:
+
+python -m src.click_and_score
+
+Verify artifact integrity:
+
+python -m src.integrity results/object_store/xray/overlays/case_id=XXX/run_id=XXX
+
+Launch the dashboard:
+
+streamlit run src/streamlit_app.py
