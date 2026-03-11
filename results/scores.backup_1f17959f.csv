@@ -1,0 +1,11 @@
+image_name,col2,col3,col4,run_id,annotation_confidence,overlay_png_key,overlay_json_key
+1.jpg,5,3,4,2c825964,low,xray/overlays/case_id=1/run_id=2c825964/overlay.png,xray/overlays/case_id=1/run_id=2c825964/overlay.json,xray/overlays/case_id=1/run_id=2c825964/summary.json
+10.jpg,3,2,3,d1019ee2,low,xray/overlays/case_id=10/run_id=d1019ee2/overlay.png,xray/overlays/case_id=10/run_id=d1019ee2/overlay.json,xray/overlays/case_id=10/run_id=d1019ee2/summary.json
+100.jpg,2,2,2,68deb037,low,xray/overlays/case_id=100/run_id=68deb037/overlay.png,xray/overlays/case_id=100/run_id=68deb037/overlay.json,xray/overlays/case_id=100/run_id=68deb037/summary.json
+101.jpg,1,2,3,a57f3d00,low,xray/overlays/case_id=101/run_id=a57f3d00/overlay.png,xray/overlays/case_id=101/run_id=a57f3d00/overlay.json,xray/overlays/case_id=101/run_id=a57f3d00/summary.json
+102.jpg,4,3,4,26651be7,low,xray/overlays/case_id=102/run_id=26651be7/overlay.png,xray/overlays/case_id=102/run_id=26651be7/overlay.json,xray/overlays/case_id=102/run_id=26651be7/summary.json
+103.jpg,1,2,2,1a6cf2b7,low,xray/overlays/case_id=103/run_id=1a6cf2b7/overlay.png,xray/overlays/case_id=103/run_id=1a6cf2b7/overlay.json,xray/overlays/case_id=103/run_id=1a6cf2b7/summary.json
+104.jpg,4,2,3,7779caae,medium,xray/overlays/case_id=104/run_id=7779caae/overlay.png,xray/overlays/case_id=104/run_id=7779caae/overlay.json,xray/overlays/case_id=104/run_id=7779caae/summary.json
+105.jpg,1,2,3,92109cff,low,xray/overlays/case_id=105/run_id=92109cff/overlay.png,xray/overlays/case_id=105/run_id=92109cff/overlay.json,xray/overlays/case_id=105/run_id=92109cff/summary.json
+106.jpg,3,2,3,98cec986,low,xray/overlays/case_id=106/run_id=98cec986/overlay.png,xray/overlays/case_id=106/run_id=98cec986/overlay.json,xray/overlays/case_id=106/run_id=98cec986/summary.json
+107.jpg,2,2,4,b6159f1f,low,xray/overlays/case_id=107/run_id=b6159f1f/overlay.png,xray/overlays/case_id=107/run_id=b6159f1f/overlay.json,xray/overlays/case_id=107/run_id=b6159f1f/summary.json

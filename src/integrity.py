@@ -154,3 +154,17 @@ def verify_run(run_dir: str) -> None:
                     f"  expected: {expected_img}\n"
                     f"  actual:   {actual_img}"
                 )
+                
+                
+                
+                
+if __name__ == "__main__":
+    import sys
+
+    if len(sys.argv) != 2:
+        print("Usage: python -m src.integrity <run_dir>")
+        sys.exit(1)
+
+    run_dir = sys.argv[1]
+    verify_run(run_dir)
+    print(f"verify_run passed: {run_dir}")

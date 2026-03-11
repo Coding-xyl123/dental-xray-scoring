@@ -1,0 +1,27 @@
+{
+  "schema_version": "1.0",
+  "run_id": "c9e9ef86",
+  "created_at": "2026-03-11T18:21:19.490675Z",
+  "status": "SUCCESS",
+  "code_version": "f20beeb98d6f7ea2b8af82745dffb90ee4358072",
+  "inputs": {
+    "image_path": "input/101.jpg",
+    "image_sha256": "1a1894f35b8632eaa515319bf0873184eaae2389811a580c43dc3802144f6880",
+    "config_sha256": "817954b9695b8ed405d288e084ca1eefa074d4df67e6865c9e758f4e2eb1d66e",
+    "config_canonical_json": "{\"algorithm_version\":\"heuristic-v1\",\"default_image_width_cm\":30.0,\"min_trusted_dpi\":150}"
+  },
+  "artifacts": {
+    "overlay_png": {
+      "path": "overlay.png",
+      "sha256": "61e3de2bebc158af506f7dc03442806a47e0cb531b39dc618ecee0bf75692402"
+    },
+    "overlay_json": {
+      "path": "overlay.json",
+      "sha256": "c99b048e38d6a3df68ce5bb3a390afe90b3755e8927d6126ea6b3893dfe6f2f2"
+    },
+    "summary_json": {
+      "path": "summary.json",
+      "sha256": "0b8aaf97196cbf4e9edceee6d63dddd6c0b34e581c2fc404dbf420944a64e805"
+    }
+  }
+}
