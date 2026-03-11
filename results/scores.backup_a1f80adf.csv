@@ -1,6 +1,0 @@
-image_name,col2,col3,col4,run_id,annotation_confidence,overlay_png_key,overlay_json_key
-1.jpg,5,3,3,5d01144c,low,xray/overlays/case_id=1/run_id=5d01144c/overlay.png,xray/overlays/case_id=1/run_id=5d01144c/overlay.json
-10.jpg,2,2,4,40c5c66a,low,xray/overlays/case_id=10/run_id=40c5c66a/overlay.png,xray/overlays/case_id=10/run_id=40c5c66a/overlay.json
-100.jpg,2,1,3,ecbad870,low,xray/overlays/case_id=100/run_id=ecbad870/overlay.png,xray/overlays/case_id=100/run_id=ecbad870/overlay.json
-1.jpg,5,3,4,8b1bf2d0,low,xray/overlays/case_id=1/run_id=8b1bf2d0/overlay.png,xray/overlays/case_id=1/run_id=8b1bf2d0/overlay.json
-101.jpg,1,3,3,4cec7660,low,xray/overlays/case_id=101/run_id=4cec7660/overlay.png,xray/overlays/case_id=101/run_id=4cec7660/overlay.json

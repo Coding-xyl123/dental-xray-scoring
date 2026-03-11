@@ -1,4 +1,0 @@
-image_name,col2,col3,col4,run_id,annotation_confidence,overlay_png_key,overlay_json_key
-1.jpg,5,3,3,5150ceb7,low,xray/overlays/case_id=1/run_id=5150ceb7/overlay.png,xray/overlays/case_id=1/run_id=5150ceb7/overlay.json
-10.jpg,3,2,3,6fa40b8e,low,xray/overlays/case_id=10/run_id=6fa40b8e/overlay.png,xray/overlays/case_id=10/run_id=6fa40b8e/overlay.json
-100.jpg,2,2,3,c0e91fb2,low,xray/overlays/case_id=100/run_id=c0e91fb2/overlay.png,xray/overlays/case_id=100/run_id=c0e91fb2/overlay.json

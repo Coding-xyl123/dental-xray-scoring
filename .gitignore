@@ -2,7 +2,6 @@
 __pycache__/
 *.pyc
 *.pyo
-*.pyd
 
 # Virtual environments
 .venv/
@@ -16,16 +15,7 @@ venv/
 
 # Generated outputs
 results/
-data/
+logs/
 
 # Logs
 *.log
-__pycache__/
-*.pyc
-
-.env
-
-results/
-
-examples/
-   sample_run/
