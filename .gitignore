@@ -1,12 +1,13 @@
-# Python
+# Python bytecode
 __pycache__/
-*.pyc
-*.pyo
+*.py[cod]
+*$py.class
 
 # Virtual environments
 .venv/
 .venv312/
 venv/
+env/
 
 # Environment variables
 .env
@@ -14,9 +15,18 @@ venv/
 # macOS
 .DS_Store
 
-# Generated outputs
-results/
-logs/
-
 # Logs
 *.log
+logs/
+
+# Generated outputs (do not commit artifacts)
+results/
+data/
+
+# Python packaging
+build/
+dist/
+*.egg-info/
+
+# Jupyter (optional)
+.ipynb_checkpoints/
